@@ -30,16 +30,10 @@ public class CreateUserUseCase {
             throw new MyUserException("All fields must be completed, please verify your information");
         }
 
-        RoleDomain roleDefault;
-
-        roleDefault = getRoleByNameUseCase.execute("Field");
-        //Imprimir en consolar roleDefault
-        System.out.println(roleDefault + " Desde el caso de uso line34");
-
+        RoleDomain roleDefault = getRoleByNameUseCase.execute("Field");
         if (roleDefault == null) {
             throw new MyUserException("Role not found");
         }
-
 
         var userDomain = new UserDomain();
         userDomain.setFullName(userRequestDomain.getFullName());
@@ -51,8 +45,6 @@ public class CreateUserUseCase {
         userDomain.getActivatedAt();
         userDomain.setRole(roleDefault);
         userRepository.save(userMapperDomain.fromDomainToData(userDomain));
-
-
 
         var userResponseDomain = new UserResponseDomain();
         userResponseDomain.setFullName(userDomain.getFullName());
