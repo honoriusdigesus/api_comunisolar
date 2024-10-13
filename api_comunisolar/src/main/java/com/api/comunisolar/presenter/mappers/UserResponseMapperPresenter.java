@@ -1,5 +1,7 @@
 package com.api.comunisolar.presenter.mappers;
 
+import com.api.comunisolar.domain.entities.UserDomain;
+import com.api.comunisolar.domain.entities.UserRequestDomain;
 import com.api.comunisolar.domain.entities.UserResponseDomain;
 import com.api.comunisolar.presenter.entities.UserResponsePresenter;
 
@@ -24,6 +26,16 @@ public class UserResponseMapperPresenter {
 
     //From UserResponseDomain to UserResponsePresenter
     public UserResponsePresenter fromDomainToPresenter(UserResponseDomain userResponseDomain){
+        return new UserResponsePresenter(
+                userResponseDomain.getFullName(),
+                userResponseDomain.getEmail(),
+                userResponseDomain.getEnabled(),
+                userResponseDomain.getIdentityDocument(),
+                rolePresenterMapper.fromDomainToPresenter(userResponseDomain.getRole())
+        );
+    }
+
+    public UserResponsePresenter fromUserDomainToUserDomainResponse(UserResponseDomain userResponseDomain) {
         return new UserResponsePresenter(
                 userResponseDomain.getFullName(),
                 userResponseDomain.getEmail(),

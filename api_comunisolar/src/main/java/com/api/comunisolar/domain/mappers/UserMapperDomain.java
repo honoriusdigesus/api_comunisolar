@@ -2,6 +2,7 @@ package com.api.comunisolar.domain.mappers;
 
 import com.api.comunisolar.data.entities.User;
 import com.api.comunisolar.domain.entities.UserDomain;
+import com.api.comunisolar.domain.entities.UserResponseDomain;
 
 public class UserMapperDomain {
     //Role mapper from domain to data
@@ -37,6 +38,16 @@ public class UserMapperDomain {
                 userDomain.getCreatedAt(),
                 userDomain.getActivatedAt(),
                 roleMapperDomain.fromDomainToData(userDomain.getRole()));
+    }
+
+    public UserResponseDomain fromUserDomainToUserDomainResponse(UserDomain userDomain) {
+        return new UserResponseDomain(
+                userDomain.getFullName(),
+                userDomain.getEmail(),
+                userDomain.getEnabled(),
+                userDomain.getIdentityDocument(),
+                userDomain.getRole()
+        );
     }
 
 

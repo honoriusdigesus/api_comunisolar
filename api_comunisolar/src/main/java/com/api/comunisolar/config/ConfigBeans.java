@@ -42,6 +42,11 @@ public class ConfigBeans {
         return new CreateUserUseCase(userRepository, userMapperDomain, getRoleByNameUseCase, validator);
     }
 
+    @Bean
+    public GetAllUserUseCase getAllUserUseCase(UserRepository userRepository, UserMapperDomain userMapperDomain) {
+        return new GetAllUserUseCase(userRepository, userMapperDomain);
+    }
+
 
 }
 
