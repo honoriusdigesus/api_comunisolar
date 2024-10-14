@@ -19,7 +19,7 @@ public class GetAllUserUseCase {
     public List<UserResponseDomain> execute() {
         var listUsers = userRepository.findAll().stream()
                 .map(userMapperDomain::fromDataToDomain)
-                .collect(Collectors.toList());
+                .toList();
         //Mappear a lista de usuários para a lista de usuários de respuesta
         return listUsers.stream()
                 .map(userMapperDomain::fromUserDomainToUserDomainResponse)

@@ -47,6 +47,11 @@ public class ConfigBeans {
         return new GetAllUserUseCase(userRepository, userMapperDomain);
     }
 
+    @Bean
+    public GetUserByDIUsesCase getUserByDIUsesCase(UserRepository userRepository, UserMapperDomain userMapperDomain) {
+        return new GetUserByDIUsesCase(userRepository, userMapperDomain);
+    }
+
 
 }
 
