@@ -52,6 +52,11 @@ public class ConfigBeans {
         return new GetUserByDIUsesCase(userRepository, userMapperDomain);
     }
 
+    @Bean
+    public DeleteUserByDIUseCase deleteUserByDIUseCase(UserRepository userRepository, GetUserByDIUsesCase getUserByDIUsesCase) {
+        return new DeleteUserByDIUseCase(userRepository, getUserByDIUsesCase);
+    }
+
 
 }
 

@@ -1,6 +1,7 @@
 package com.api.comunisolar.presenter.controllers;
 
 import com.api.comunisolar.domain.usecases.CreateUserUseCase;
+import com.api.comunisolar.domain.usecases.DeleteUserByDIUseCase;
 import com.api.comunisolar.domain.usecases.GetAllUserUseCase;
 import com.api.comunisolar.domain.usecases.GetUserByDIUsesCase;
 import com.api.comunisolar.presenter.entities.UserRequestPresenter;
@@ -21,19 +22,22 @@ public class UserController {
     private final UserResponseMapperPresenter userResponseMapperPresenter;
     private final GetAllUserUseCase getAllUserUseCase;
     private final GetUserByDIUsesCase getUserByDIUsesCase;
+    private final DeleteUserByDIUseCase deleteUserByDIUseCase;
 
     public UserController(
             CreateUserUseCase createUserUseCase,
             UserRequestMapperPresenter userRequestMapperPresenter,
             UserResponseMapperPresenter userResponseMapperPresenter,
             GetAllUserUseCase getAllUserUseCase,
-            GetUserByDIUsesCase getUserByDIUsesCase
+            GetUserByDIUsesCase getUserByDIUsesCase,
+            DeleteUserByDIUseCase deleteUserByDIUseCase
             ) {
         this.createUserUseCase = createUserUseCase;
         this.userRequestMapperPresenter = userRequestMapperPresenter;
         this.userResponseMapperPresenter = userResponseMapperPresenter;
         this.getAllUserUseCase = getAllUserUseCase;
         this.getUserByDIUsesCase = getUserByDIUsesCase;
+        this.deleteUserByDIUseCase = deleteUserByDIUseCase;
     }
 
     @PostMapping
@@ -62,6 +66,16 @@ public class UserController {
     @RequestMapping("/get-user/{identityDocument}")
     public ResponseEntity<UserResponsePresenter> getUserByDI(@PathVariable String identityDocument) {
         var userResponse = getUserByDIUsesCase.execute(identityDocument);
+        var userResponsePresenter = userResponseMapperPresenter.fromDomainToPresenter(userResponse);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userResponsePresenter);
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-user/{identityDocument}")
+    public ResponseEntity<UserResponsePresenter> deleteUserByDI(@PathVariable String identityDocument) {
+        var userResponse = deleteUserByDIUseCase.execute(identityDocument);
         var userResponsePresenter = userResponseMapperPresenter.fromDomainToPresenter(userResponse);
         return ResponseEntity
                 .status(HttpStatus.OK)
